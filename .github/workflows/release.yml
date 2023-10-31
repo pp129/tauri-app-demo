@@ -73,7 +73,7 @@ jobs:
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tauriScript: pnpm
+          tauriScript: npm run tauri
           tagName: ${{ github.ref_name }}
           releaseName: "Emberry ${{ github.ref_name }}"
           releaseBody: |
