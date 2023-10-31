@@ -1,7 +1,26 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+import {ref} from 'vue';
+import { invoke } from "@tauri-apps/api/tauri";
 import Greet from "./components/Greet.vue";
+
+let todoList = ref([]);
+
+const loadList = function () {
+  invoke("list").then(result => {
+    console.log("list: " , result)
+    todoList.value = [...result]
+  })
+  console.log(todoList)
+}
+
+const delItem = async function ({id}) {
+  invoke("del", { id }).then(()=>{
+    loadList()
+  })
+}
+
+loadList();
+
 </script>
 
 <template>
@@ -37,7 +56,9 @@ import Greet from "./components/Greet.vue";
       >
     </p>
 
-    <Greet />
+    <Greet @onAddItem="loadList" />
+
+    <p v-for="item in todoList" :key="item.id" @dblclick="delItem(item)">{{ item.title }}</p>
   </div>
 </template>
 

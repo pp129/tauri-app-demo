@@ -1,13 +1,52 @@
 <script setup>
-import { ref } from "vue";
-import { invoke } from "@tauri-apps/api/tauri";
+import { ref,defineEmits } from "vue";
+import { invoke,convertFileSrc } from "@tauri-apps/api/tauri";
+import { open } from "@tauri-apps/api/dialog"
+// import { readTextFile, BaseDirectory } from '@tauri-apps/api/fs';
 
-const greetMsg = ref("");
+
 const name = ref("");
+const imgList = ref([]);
+
+const emit = defineEmits(['onAddItem']);
 
 async function greet() {
-  // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-  greetMsg.value = await invoke("greet", { name: name.value });
+  if(!name.value) return;
+  invoke("add_item", { title: name.value }).then(()=>{
+    emit('onAddItem')
+    name.value = ""
+  })
+}
+
+const uploadImage = async ()=>{
+  let files = await open({
+    multiple: true,
+    filters: [{
+      name: 'Image',
+      extensions: ['png', 'jpeg','jpg']
+    }]
+  });
+  if(files && files.length>0) {
+    files.forEach(filePath => {
+      const url = convertFileSrc(filePath)
+      console.log(url)
+      imgList.value.push({url})
+    })
+  }
+}
+
+const uploadExcel = async ()=>{
+  const path = await open({
+    filters: [{
+      name: 'Excel',
+      extensions: ['xlsx', 'xls']
+    }]
+  });
+  // console.log(path);
+  if(path) {
+    const excelData = await invoke('read_excel', {path});
+    console.log(excelData);
+  }
 }
 </script>
 
@@ -15,7 +54,14 @@ async function greet() {
   <form class="row" @submit.prevent="greet">
     <input id="greet-input" v-model="name" placeholder="Enter a name..." />
     <button type="submit">Greet</button>
+    <button @click="uploadImage">upload Image</button>
+    <button @click="uploadExcel">upload Excel</button>
   </form>
-
-  <p>{{ greetMsg }}</p>
+  <img v-for="(img,index) in imgList" :key="index" :src="img.url" alt="">
 </template>
+
+<style>
+.row button {
+  margin-right: 10px;
+}
+</style>

@@ -4,7 +4,7 @@
     "beforeBuildCommand": "pnpm build",
     "devPath": "http://localhost:1420",
     "distDir": "../dist",
-    "withGlobalTauri": false
+    "withGlobalTauri": true
   },
   "package": {
     "productName": "tauri-app-demo",
@@ -16,12 +16,37 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "dialog": {
+        "all": false,
+        "open": true
+      },
+      "protocol": {
+        "all": false,
+        "asset": true,
+        "assetScope": [
+          "$PICTURE","$DOCUMENT"
+        ]
+      },
+      "fs": {
+        "all": true,
+        "readFile": true,
+        "writeFile": true,
+        "readDir": true,
+        "copyFile": true,
+        "createDir": true,
+        "removeDir": true,
+        "removeFile": true,
+        "renameFile": true
       }
+    },
+    "security": {
+      "csp": "default-src 'self'; img-src 'self'; asset: https://asset.localhost"
     },
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.dev",
+      "identifier": "com.tauri-app.dev",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -30,16 +55,13 @@
         "icons/icon.ico"
       ]
     },
-    "security": {
-      "csp": null
-    },
     "windows": [
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "tauri-app-demo",
-        "width": 800,
-        "height": 600
+        "title": "tauri-app",
+        "width": 1366,
+        "height": 768
       }
     ],
     "updater": {

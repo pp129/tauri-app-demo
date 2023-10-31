@@ -13,9 +13,19 @@ edition = "2021"
 tauri-build = { version = "1.4", features = [] }
 
 [dependencies]
-tauri = { version = "1.4", features = ["shell-open"] }
+tauri = { version = "1.4", features = [ "protocol-asset", "dialog-open", "fs-all", "updater", "shell-open"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+tokio = { version = "1", features = ["full"] }
+sqlx= {version= "0.7.2", features = ["runtime-tokio-native-tls", "sqlite"] }
+nanoid = "0.4.0"
+ooxml = "0.2.7"
+itertools = "0.11.0"
+
+[dependencies.tauri-plugin-sql]
+git = "https://github.com/tauri-apps/plugins-workspace"
+branch = "v1"
+features = ["sqlite"] # or "postgres", or "mysql"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
