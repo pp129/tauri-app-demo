@@ -50,7 +50,7 @@ jobs:
           cache: "pnpm"
 
       - name: 💾 Install Frontend Dependencies
-        run: pnpm i --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
       # Generate a changelog using the commit history
       - name: 📟 Semantic Changelog
