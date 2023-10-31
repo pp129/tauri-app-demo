@@ -40,7 +40,7 @@ jobs:
       - name: 💾 Install Pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8.2.0
+          version: 7.29.0
           run_install: false
 
       - name: 📦️ Pnpm Cache
