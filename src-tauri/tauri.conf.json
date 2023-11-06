@@ -1,7 +1,7 @@
 {
   "build": {
-    "beforeDevCommand": "pnpm dev",
-    "beforeBuildCommand": "pnpm build",
+    "beforeDevCommand": "pnpm vite:dev",
+    "beforeBuildCommand": "pnpm vite:build",
     "devPath": "http://localhost:1420",
     "distDir": "../dist",
     "withGlobalTauri": true
@@ -24,9 +24,7 @@
       "protocol": {
         "all": false,
         "asset": true,
-        "assetScope": [
-          "$PICTURE","$DOCUMENT"
-        ]
+        "assetScope": ["$PICTURE", "$DOCUMENT"]
       },
       "fs": {
         "all": true,
