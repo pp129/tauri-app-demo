@@ -63,7 +63,7 @@
       }
     ],
     "updater": {
-      "active": true,
+      "active": false,
       "endpoints": [
         "https://github.com/pp129/tauri-app-demo/releases/download/updater/update.json"
       ],
